@@ -18,3 +18,11 @@ upload.great.fire <- function(a.server)
   meta.data <- list("Name","record_ID","Material", "Title","Country_pub", "Place_pub", "Publisher","Date_pub","Pages")
   a.server$upload(meta.data, data, "Great Fire")
 }
+
+upload.black.history <- function(a.server)
+{
+  data <- read_csv("data/BritishHistoryCleaned.csv")
+  meta.data <- list("Name","Country of publication", "Place of publication","Date of publication","Pages","Languages","BMI","BMR")
+  a.server$upload(meta.data, data, "Black history")
+}
+

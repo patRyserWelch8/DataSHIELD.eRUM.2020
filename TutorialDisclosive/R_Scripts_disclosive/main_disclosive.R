@@ -9,8 +9,12 @@ source("R_Scripts_disclosive/disclosive_client.R")
 print("-------------- Start server -------------------")
 start.Server("London")
 
-print("-------------- upload data  -------------------")
+print("-------------- upload data Great Fire -------------------")
 upload.great.fire(London)
 
 print ("------------- access the data ----------------")
 print (London$datasets[["Great Fire"]]$data$Name)
+
+print("-------------- upload data Black history -------------------")
+upload.black.history(London)
+print (London$datasets[["Black history"]]$data$Name)

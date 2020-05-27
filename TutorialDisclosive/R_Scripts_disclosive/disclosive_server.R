@@ -20,15 +20,7 @@ DataSet <- R6Class("DataSet", list(
              self$meta.data      <- meta.data
              self$data           <- data
              colnames(self$data) <- self$meta.data
-          }#,
-          #print <- function()
-          #{
-           # cat("DataSet: '\n")
-            #cat("   meta.data : ", as.character(self$meta.data, "\n", sep = "")
-            #cat("   data      : columns - ", ncol(self$data), "rows - ", nrow(data) , "\n", sep= "")
-            #invisible(self)
-                
-          #}
+          }
 ))
 
 Server  <- R6Class("Server", list(

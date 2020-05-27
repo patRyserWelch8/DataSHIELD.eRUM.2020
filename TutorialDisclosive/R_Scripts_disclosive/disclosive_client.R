@@ -26,3 +26,28 @@ upload.black.history <- function(a.server)
   a.server$upload(meta.data, data, "Black history")
 }
 
+
+upload.classic.1 <- function(a.server)
+{
+  data <- read_csv("data/classic_1.csv")
+  meta.data <- list("Title", "Author","GreatReadScore","Words","YearPub")
+  a.server$upload(meta.data, data, "Classic_1")
+}
+
+
+upload.classic.2 <- function(a.server)
+{
+  data <- read_csv("data/classic_2.csv")
+  meta.data <- list("Title", "Author","GreatReadScore","Words","YearPub")
+  a.server$upload(meta.data, data, "Classic_2")
+}
+
+upload.classic.3 <- function(a.server)
+{
+  data <- read_csv("data/classic_3.csv")
+  meta.data <- list("Title", "Author","GreatReadScore","Words","YearPub")
+  a.server$upload(meta.data, data, "Classic_3")
+}
+
+
+

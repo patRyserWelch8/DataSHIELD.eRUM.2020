@@ -24,12 +24,14 @@ Connection <- R6Class("Connection", list(
                         stopifnot(is.R6(server))
                         self$servers[[server.name]] <- server
                       },
-                      upload = function(server, path.to.data, meta.data, dataset.name)
+                      upload = function(server.name, path.to.data, meta.data, dataset.name)
                       {
+                        stopifnot(is.character(server.name))
                         stopifnot(file.exists(path.to.data))
                         stopifnot(is.list(meta.data))
+                        stopifnot(server.name %in% names(self$servers))
                         data <- read_csv(path.to.data)
-                        server$upload(meta.data, data, dataset.name)
+                        self$servers[[server.name]]$upload(meta.data, data, dataset.name)
                       }
 ))
 
@@ -39,6 +41,8 @@ Connection <- R6Class("Connection", list(
 
 
 
+
+//to be deleted
 upload.classic.1 <- function(a.server)
 {
   data <- read_csv("data/classic_1.csv")

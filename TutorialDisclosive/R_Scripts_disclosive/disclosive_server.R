@@ -24,7 +24,7 @@ DataSet <- R6Class("DataSet", list(
 ))
 
 Server  <- R6Class("Server", list(
-           datasets = NULL, 
+           datasets = list(), 
            initaliaze = function()
            {
              self$datasets <- list()

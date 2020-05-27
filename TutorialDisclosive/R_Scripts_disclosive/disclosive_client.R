@@ -3,28 +3,40 @@
 #'Date of Creation : 26/5/2020
 #'Date of update:    26/5/2020
 
+# library(ies) required for this script
 source("R_Scripts_disclosive/disclosive_server.R")
 require(readr)
+library(R6)
 
-start.Server <- function(a.server.name)
-{
-  stopifnot(is.character(a.server.name))
-  assign(a.server.name, Server$new(), pos=1)
-}
+Connection <- R6Class("Connection", list(
+                      servers = NULL,
+                      initaliaze = function()
+                      {
+                        self$server <- list()
+                      },
+                      start.server = function()
+                      {
+                        return(Server$new())
+                      },
+                      connect = function(server.name,server)
+                      {
+                        stopifnot(is.character(server.name))
+                        stopifnot(is.R6(server))
+                        self$servers[[server.name]] <- server
+                      },
+                      upload = function(server, path.to.data, meta.data, dataset.name)
+                      {
+                        stopifnot(file.exists(path.to.data))
+                        stopifnot(is.list(meta.data))
+                        data <- read_csv(path.to.data)
+                        server$upload(meta.data, data, dataset.name)
+                      }
+))
 
-upload.great.fire <- function(a.server)
-{
-  data <- read_csv("data/GreatFire.csv")
-  meta.data <- list("Name","record_ID","Material", "Title","Country_pub", "Place_pub", "Publisher","Date_pub","Pages")
-  a.server$upload(meta.data, data, "Great Fire")
-}
 
-upload.black.history <- function(a.server)
-{
-  data <- read_csv("data/BritishHistoryCleaned.csv")
-  meta.data <- list("Name","Country of publication", "Place of publication","Date of publication","Pages","Languages","BMI","BMR")
-  a.server$upload(meta.data, data, "Black history")
-}
+
+
+
 
 
 upload.classic.1 <- function(a.server)

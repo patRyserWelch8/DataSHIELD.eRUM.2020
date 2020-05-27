@@ -6,31 +6,38 @@
 
 source("R_Scripts_disclosive/disclosive_client.R")
 
-print("-------------- Start servers -------------------")
-start.Server("London")
-start.Server("Newcastle")
-start.Server("Edinburgh")
+print("-------------- Start servers  and connect to servers -------------------")
+connections <- Connection$new()
+London <- connections$start.server()
+Newcastle <- connections$start.server()
+Edinburgh <- connections$start.server()
 
-print("-------------- upload data Great Fire -------------------")
-upload.great.fire(London)
-
-print ("------------- access the data ----------------")
-print (London$datasets[["Great Fire"]]$data$Name)
-
-print("-------------- upload data Black history -------------------")
-upload.black.history(London)
-print (London$datasets[["Black history"]]$data$Name)
+connections$connect("London",London)
+connections$connect("Newcastle",Newcastle)
+connections$connect("Edinburgh",London)
 
 
-print("-------------- upload classic 1 -------------------")
-upload.classic.1(Edinburgh)
-print (Edinburgh$datasets[["Classic_1"]]$data$Title)
+#start.Server("London")
+#start.Server("Newcastle")
+#start.Server("Edinburgh")
+
+print("-------------- upload all the data in the servers using the connections -------------------")
+print("The Great Fire data set is uploaded in the London Server")
+path.to.data <- "data/GreatFire.csv"
+meta.data <- list("Name","record_ID","Material", "Title","Country_pub", "Place_pub", "Publisher","Date_pub","Pages")
+connections$upload(London,path.to.data,meta.data,"GreatFire")
+
+print("The Black history data set is uploaded in the Newcastle Server")
+path.to.data <- "data/BritishHistoryCleaned.csv"
+meta.data <- list("Name","Country of publication", "Place of publication","Date of publication","Pages","Languages","BMI","BMR")
+connections$upload(Newcastle,path.to.data,meta.data,"BlackHistory")
 
 
-print("-------------- upload classic 2 -------------------")
-upload.classic.2(Newcastle)
-print (Newcastle$datasets[["Classic_2"]]$data$Title)
 
-print("-------------- upload classic 3 -------------------")
-upload.classic.3(London)
-print (London$datasets[["Classic_3"]]$data$Title)
+print("-------------- retrieve some of the data from the servers and display data -------------------")
+names.great.fires <- connections$servers$London$datasets[["GreatFire"]]$data$Name
+print (names.great.fires)
+
+some.authors <- connections$servers$Newcastle$datasets[["BlackHistory"]]$data[, c("Name","Country of publication")]
+print(some.authors)
+

@@ -10,8 +10,8 @@ library(R6)
 #Definition of a server class
   
 DataSet <- R6Class("DataSet", list(
-          meta.data = NULL,
-          data = NULL,
+          meta.data = list(),
+          data = data.frame(),
           initialize = function(meta.data, data)
           {
              stopifnot(is.list(meta.data), is.data.frame(data))

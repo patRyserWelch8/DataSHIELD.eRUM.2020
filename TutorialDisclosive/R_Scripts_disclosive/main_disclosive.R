@@ -37,4 +37,3 @@ print (names.great.fires)
 
 some.authors <- connections$servers$Newcastle$datasets[["BlackHistory"]]$data[, c("Name","Country of publication")]
 print(some.authors)
-

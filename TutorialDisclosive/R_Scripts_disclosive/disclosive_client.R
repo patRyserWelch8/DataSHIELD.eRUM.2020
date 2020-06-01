@@ -10,9 +10,9 @@ library(R6)
 
 Connection <- R6Class("Connection", list(
                       servers = NULL,
-                      initaliaze = function()
+                      initialize = function()
                       {
-                        self$server <- list()
+                        self$servers <- list()
                       },
                       start.server = function()
                       {

@@ -8,7 +8,6 @@ source("R_Scripts_parser/parser_client.R")
 
 
 print("--------------- Disclosive example ----------------")
-
 print("----   Start servers  and connect to servers ------")
 connections <- Connection$new()
 London    <- connections$start.server()
@@ -103,6 +102,11 @@ print(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,c("Ye
 
 print("----- data sets and their meta data and retrieve meta.data -----")
 print(connections$get_server("Newcastle")$server.ls())
-print(connections$get_server("Newcastle")$server.dim("classic"))
+connections$get_server("Newcastle")$set_dataset("classic")
+print(connections$get_server("Newcastle")$server.dim())
+print(connections$get_server("Newcastle")$server.mean("Words"))
+print(connections$get_server("Newcastle")$server.sd("Words"))
+
+
 
 

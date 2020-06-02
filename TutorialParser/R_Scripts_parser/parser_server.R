@@ -27,6 +27,17 @@ DataSet <- R6Class("DataSet",
               {
                 stop("meta.data is read only")
               }
+            },
+            data = function(value)
+            {
+              if(missing(value))
+              {
+                return(private$.data)
+              }
+              else
+              {
+                stop("data is read only")
+              }
             }
           ),
           public = list
@@ -38,7 +49,7 @@ DataSet <- R6Class("DataSet",
              
                 private$.meta.data      <- meta.data
                 private$.data           <- data
-                colnames(private$.data)   <- private$.meta.data
+                colnames(private$.data) <- private$.meta.data
           }
 ))
 
@@ -63,21 +74,36 @@ Server  <- R6Class("Server",
              {
                stopifnot(is.character(dataset.name))
                stopifnot(dataset.name %in% names(private$.datasets))
-               private$.current = private$.datasets[[dataset.name]]
+               private$.current = dataset.name
              },
              server.ls = function()
              {
                return(names(private$.datasets))
              },
-             server.dim = function(dataset.name)
+             server.dim = function()
              {
-               stopifnot(is.character(dataset.name))
-               stopifnot(dataset.name %in% names(private$.datasets))
-               return(private$.datasets[[dataset.name]]$meta.data)
+               if (!is.null(private$.current))
+               {
+                 return(private$.datasets[[private$.current]]$meta.data)
+               }
+               else
+               {
+                 stop("no dataset has yet to be set.")
+               }
              },
-             server.mean = function ()
+             server.mean = function(variable)
              {
-                
+                stopifnot(!is.null(private$.current)) 
+                stopifnot(is.character(variable))
+                stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
+                return(mean(private$.datasets[[private$.current]]$data[[variable]]))
+             },
+             server.sd = function(variable)
+             {
+               stopifnot(!is.null(private$.current)) 
+               stopifnot(is.character(variable))
+               stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
+               return(sd(private$.datasets[[private$.current]]$data[[variable]]))
              }
            )
 )

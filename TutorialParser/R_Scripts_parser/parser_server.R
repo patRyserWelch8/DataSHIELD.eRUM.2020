@@ -8,7 +8,6 @@ library(R6)
 
 
 #Definition of a server class
-  
 DataSet <- R6Class("DataSet", 
           private = list
           (
@@ -104,6 +103,27 @@ Server  <- R6Class("Server",
                stopifnot(is.character(variable))
                stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
                return(sd(private$.datasets[[private$.current]]$data[[variable]]))
+             },
+             server.min = function(variable)
+             {
+               stopifnot(!is.null(private$.current)) 
+               stopifnot(is.character(variable))
+               stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
+               return(min(private$.datasets[[private$.current]]$data[[variable]]))
+             },
+             server.max = function(variable)
+             {
+               stopifnot(!is.null(private$.current)) 
+               stopifnot(is.character(variable))
+               stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
+               return(max(private$.datasets[[private$.current]]$data[[variable]]))
+             },
+             server.factor = function(variable)
+             {
+               stopifnot(!is.null(private$.current)) 
+               stopifnot(is.character(variable))
+               stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
+               return(factor(private$.datasets[[private$.current]]$data[[variable]]))
              }
            )
 )

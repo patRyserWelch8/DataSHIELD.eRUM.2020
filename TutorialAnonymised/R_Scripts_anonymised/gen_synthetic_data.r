@@ -30,6 +30,14 @@ verify.synthetic.data <- function(dataset, synthetic.dataset)
   
 }
 
+generate.synthetic.better.data <- function(dataset, name.synth.data)
+{
+  data       <- read_csv(dataset)
+  synth.data <- MASS::mvrnorm(n = nrow(data), mu = colMeans(data), Sigma = cov(data))
+  write.csv (synth.data, name.synth.data, row.names = FALSE)
+}
+
+
 generate.synthetic.data("data/fully_anonymised_classic_1.csv","synth_classic_1.csv")
 generate.synthetic.data("data/fully_anonymised_classic_2.csv","synth_classic_2.csv")
 generate.synthetic.data("data/fully_anonymised_classic_3.csv","synth_classic_3.csv")
@@ -38,6 +46,15 @@ verify.synthetic.data("data/fully_anonymised_classic_1.csv","synth_classic_1.csv
 verify.synthetic.data("data/fully_anonymised_classic_2.csv","synth_classic_2.csv")
 verify.synthetic.data("data/fully_anonymised_classic_3.csv","synth_classic_3.csv")
 
+
+generate.synthetic.better.data("data/fully_anonymised_classic_1.csv","better_synth_classic_1.csv")
+generate.synthetic.better.data("data/fully_anonymised_classic_2.csv","better_synth_classic_2.csv")
+generate.synthetic.better.data("data/fully_anonymised_classic_3.csv","better_synth_classic_3.csv")
+
+
+verify.synthetic.data("data/fully_anonymised_classic_1.csv","better_synth_classic_1.csv")
+verify.synthetic.data("data/fully_anonymised_classic_2.csv","better_synth_classic_2.csv")
+verify.synthetic.data("data/fully_anonymised_classic_3.csv","better_synth_classic_3.csv")
 
 
 

@@ -136,6 +136,8 @@ meta.data <- list("GreatReadScore","Words","YearPub")
 connections$upload("Newcastle",path.to.data,meta.data,"synth_classic")
 path.to.data <- "data/fully_anonymised_classic_1.csv"
 connections$upload("Newcastle",path.to.data,meta.data,"classic")
+path.to.data <- "data/better_synth_classic_1.csv"
+connections$upload("Newcastle",path.to.data,meta.data,"better_synth_classic")
 
 print("London has upload classic 2 datasets")
 path.to.data <- "data/synth_classic_2.csv"
@@ -143,6 +145,8 @@ meta.data <- list("GreatReadScore","Words","YearPub")
 connections$upload("London",path.to.data,meta.data,"synth_classic")
 path.to.data <- "data/fully_anonymised_classic_2.csv"
 connections$upload("London",path.to.data,meta.data,"classic")
+path.to.data <- "data/better_synth_classic_2.csv"
+connections$upload("London",path.to.data,meta.data,"better_synth_classic")
 
 
 print("Edinbugh has upload classic 3 datasets")
@@ -151,31 +155,34 @@ meta.data <- list("GreatReadScore","Words","YearPub")
 connections$upload("Edinburgh",path.to.data,meta.data,"synth_classic")
 path.to.data <- "data/fully_anonymised_classic_3.csv"
 connections$upload("Edinburgh",path.to.data,meta.data,"classic")
+path.to.data <- "data/better_synth_classic_3.csv"
+connections$upload("Edinburgh",path.to.data,meta.data,"better_synth_classic")
 
 print("----  retrieve some of the data from the servers and display them -----")
-print("Dataset 1")
+print("Dataset 1 - Newcastle")
 print("Original data:")
-print(summary(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,c("YearPub","Words","GreatReadScore")]))
-print("Synthetic data:")
-print(summary(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$data[,c("YearPub","Words","GreatReadScore")]))
+print(summary(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,]))
+print("Normal distribution:")
+print(summary(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$data[,]))
+print("Multivariate distribution:")
+print(summary(connections$servers[["Newcastle"]]$datasets[["better_synth_classic"]]$data[,]))
 
-print("Dataset 2")
+
+print("Dataset 2 - Newcastle ")
 print("Original data:")
-print(summary(connections$servers[["London"]]$datasets[["classic"]]$data[,c("YearPub","Words","GreatReadScore")]))
-print("Synthetic data:")
-print(summary(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,c("YearPub","Words","GreatReadScore")]))
+print(summary(connections$servers[["London"]]$datasets[["classic"]]$data[,]))
+print("Normal distribution:")
+print(summary(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,]))
+print("Multivariate distribution:")
+print(summary(connections$servers[["London"]]$datasets[["better_synth_classic"]]$data[,]))
 
-print("Dataset 3")
+
+print("Dataset 3 - Newcastle ")
 print("Original data:")
-print(summary(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,c("YearPub","Words","GreatReadScore")]))
-print("Synthetic data:")
-print(summary(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,c("YearPub","Words","GreatReadScore")]))
-
-
-print(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,c("YearPub","Words","GreatReadScore")])
-print(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,c("YearPub","Words","GreatReadScore")])
-print(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,c("YearPub","Words","GreatReadScore")])
-
-
+print(summary(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,]))
+print("Normal distribution:")
+print(summary(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,]))
+print("Multivariate distribution:")
+print(summary(connections$servers[["Edinburgh"]]$datasets[["better_synth_classic"]]$data[,]))
 
 

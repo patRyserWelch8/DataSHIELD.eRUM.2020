@@ -28,6 +28,7 @@ verify.synthetic.data <- function(dataset, synthetic.dataset)
   print("Synthetic dataset:")
   print(summary(synthetic.data))
   
+  
 }
 
 generate.synthetic.better.data <- function(dataset, name.synth.data)

@@ -167,7 +167,6 @@ print(summary(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$dat
 print("Multivariate distribution:")
 print(summary(connections$servers[["Newcastle"]]$datasets[["better_synth_classic"]]$data[,]))
 
-
 print("Dataset 2 - Newcastle ")
 print("Original data:")
 print(summary(connections$servers[["London"]]$datasets[["classic"]]$data[,]))
@@ -185,4 +184,149 @@ print(summary(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$dat
 print("Multivariate distribution:")
 print(summary(connections$servers[["Edinburgh"]]$datasets[["better_synth_classic"]]$data[,]))
 
+
+print("correlation coefficient : GoodRead Score and Words")
+
+print("Newcastle - Dataset 1")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Newcastle - normal dist synthetic Dataset 2")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Newcastle - multivariate synthetic Dataset 2")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["better_synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["better_synth_classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["London"]]$datasets[["classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - normal dist synthetic Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - multivariate synthetic Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["better_synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["London"]]$datasets[["better_synth_classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+
+print("Edinburgh - Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Edinburgh - normal dist synthetic Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Edinburgh - multivariate synthetic Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["better_synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["better_synth_classic"]]$data[,"Words"])
+print(cor.test(x, y, exact = TRUE))
+
+
+print("correlation coefficient : GoodRead Score and Year publication")
+
+print("Newcastle - Dataset 1")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Newcastle - normal dist synthetic Dataset 2")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Newcastle - multivariate synthetic Dataset 2")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["better_synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["better_synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["London"]]$datasets[["classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - normal dist synthetic Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - multivariate synthetic Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["better_synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["London"]]$datasets[["better_synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+
+print("Edinburgh - Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Edinburgh - normal dist synthetic Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Edinburgh - multivariate synthetic Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["better_synth_classic"]]$data[,"GreatReadScore"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["better_synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("correlation coefficient : Years and Words")
+
+print("Newcastle - Dataset 1")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Newcastle - normal dist synthetic Dataset 2")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Newcastle - multivariate synthetic Dataset 2")
+x <- unlist(connections$servers[["Newcastle"]]$datasets[["better_synth_classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["Newcastle"]]$datasets[["better_synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["London"]]$datasets[["classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - normal dist synthetic Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["London"]]$datasets[["synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("London - multivariate synthetic Dataset 2")
+x <- unlist(connections$servers[["London"]]$datasets[["better_synth_classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["London"]]$datasets[["better_synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+
+print("Edinburgh - Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Edinburgh - normal dist synthetic Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
+
+print("Edinburgh - multivariate synthetic Dataset 3")
+x <- unlist(connections$servers[["Edinburgh"]]$datasets[["better_synth_classic"]]$data[,"Words"])
+y <- unlist(connections$servers[["Edinburgh"]]$datasets[["better_synth_classic"]]$data[,"YearPub"])
+print(cor.test(x, y, exact = TRUE))
 

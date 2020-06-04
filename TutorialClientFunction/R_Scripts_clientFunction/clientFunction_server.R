@@ -145,7 +145,8 @@ Server  <- R6Class("Server",
                stopifnot(!is.null(private$.current)) 
                stopifnot(is.character(variable))
                stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
-               return(factor(private$.datasets[[private$.current]]$data[[variable]]))
+               factors <- factor(private$.datasets[[private$.current]]$data[[variable]])
+               return(as.numeric(levels(factors)))
              }
            )
 )

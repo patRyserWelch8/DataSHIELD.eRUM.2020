@@ -6,6 +6,7 @@
 
 source("R_Scripts_clientFunction/clientFunction_client.R")
 source("R_Scripts_clientFunction/ds.mean.R")
+source("R_Scripts_clientFunction/ds.factor.R")
 
 print("-------------- Start servers  and connect to servers -------------------")
 connections <- Connection$new()
@@ -55,4 +56,16 @@ print(ds.mean(connections,"Words", combined =FALSE))
 print("--- mean Great read score ---")
 print(ds.mean(connections,"GreatReadScore", combined =TRUE))
 print(ds.mean(connections,"GreatReadScore", combined =FALSE))
+
+print("--- factor year publication---")
+print(ds.factor(connections,"YearPub", combined =TRUE))
+print(ds.factor(connections,"YearPub", combined =FALSE))
+
+print("--- factor words ---")
+print(ds.factor(connections,"Words", combined =TRUE))
+print(ds.factor(connections,"Words", combined =FALSE))
+
+print("--- foctor Great read score ---")
+print(ds.factor(connections,"GreatReadScore", combined =TRUE))
+print(ds.factor(connections,"GreatReadScore", combined =FALSE))
 

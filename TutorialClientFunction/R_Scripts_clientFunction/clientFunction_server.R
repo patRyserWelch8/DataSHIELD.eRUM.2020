@@ -49,6 +49,10 @@ DataSet <- R6Class("DataSet",
                 private$.meta.data      <- meta.data
                 private$.data           <- data
                 colnames(private$.data) <- private$.meta.data
+          },
+          get_no_observations = function()
+          {
+              return(nrow(private$.data))
           }
 ))
 
@@ -97,6 +101,24 @@ Server  <- R6Class("Server",
                 stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
                 return(mean(private$.datasets[[private$.current]]$data[[variable]]))
              },
+             server.sum = function(variable)
+             {
+               stopifnot(!is.null(private$.current)) 
+               stopifnot(is.character(variable))
+               stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
+               return(sum(private$.datasets[[private$.current]]$data[[variable]]))
+             },
+             server.length = function()
+             {
+               if (!is.null(private$.current))
+               {
+                 return(private$.datasets[[private$.current]]$get_no_observations())
+               }
+               else
+               {
+                 return(0)
+               }
+             },
              server.sd = function(variable)
              {
                stopifnot(!is.null(private$.current)) 
@@ -125,6 +147,5 @@ Server  <- R6Class("Server",
                stopifnot(variable %in% as.vector(private$.datasets[[private$.current]]$meta.data))
                return(factor(private$.datasets[[private$.current]]$data[[variable]]))
              }
-            
            )
 )

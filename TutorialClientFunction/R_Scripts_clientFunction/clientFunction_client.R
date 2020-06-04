@@ -44,39 +44,22 @@ Connection <- R6Class("Connection",
                      stopifnot(dataset.name %in% names(private$.servers))
                      private$.servers[[server.name]]$set_dataset(dataset.name)
                   },
-                  get_server_names = function()
-                  {
-                    return(names(private$.servers))
-                  },
                   get_server = function(server.name)
                   {
                      stopifnot(is.character(server.name))
                      stopifnot(server.name %in% names(private$.servers))
                      return(private$.servers[[server.name]])
-                  }
+                  },
+                 get_no_servers = function()
+                 {
+                   return(length(private$.servers))
+                 },
+                 get_server_names = function()
+                 {
+                   return(names(private$.servers))
+                 }
                     
              )
 )
 
 
-server_call = function(connections,function.call)
-{
- 
-  outcome <- NULL
-  for(server in 1:length(connections))
-  {
-    
-    server.call <- paste0("s <- connections$get_server('",connections[server], "')")
-    eval(expr = parse(text = server.call))
-    print(server.call)
-    server.call <- paste0(server.call,"$",function.call)
-    print(server.call)
-    #print(self$get_server('Newcastle')$server.ls())
-    eval(expr = parse(text = server.call))
-    print(a)
-    
-  }
-  
-
-
-}

@@ -28,7 +28,6 @@ ds.factor <- function(connections, variable.name, combined = FALSE)
     factors       <- connections$get_server(server.name)$server.factor(variable.name)
     all.factors   <- c(all.factors, factors)
   }
-  print(all.factors)
   all.factors            <- as.factor(all.factors)
   outcome[["combined"]]  <- as.numeric(levels(all.factors))
   return(outcome)

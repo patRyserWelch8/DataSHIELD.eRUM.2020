@@ -37,7 +37,7 @@ print(connections$get_server("Newcastle")$server.class("YearPub"))
 print(connections$get_server("Newcastle")$server.class("Words"))
 print(connections$get_server("Newcastle")$server.class("GreatReadScore"))
 
-print("--- foctor Great read score ---")
+print("--- factor ---")
 print(ds.factor(connections,"Type", combined =TRUE))
 print(ds.factor(connections,"Type", combined =FALSE))
 
@@ -73,7 +73,7 @@ print(ds.factor(connections,"GreatReadScore", combined =FALSE))
 
 
 print("--- mean Great read score ---")
-print(ds.mean(connections,"Type", combined =TRUE))
-print(ds.mean(connections,"Type", combined =FALSE))
+print(ds.mean(connections,"GreatReadScore", combined =TRUE))
+print(ds.mean(connections,"GreatReadScore", combined =FALSE))
 
 

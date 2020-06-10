@@ -116,6 +116,7 @@ Server  <- R6Class("Server",
                 stopifnot(is.character(variable))
                 if (private$.datasets[[private$.current]]$get_no_observations() > private$.thresholds$min.length)
                 {
+                  print(class(private$.datasets[[private$.current]]$data[[variable]]))
                   if (is.numeric(private$.datasets[[private$.current]]$data[[variable]]))
                   {
                     return(mean(private$.datasets[[private$.current]]$data[[variable]]))

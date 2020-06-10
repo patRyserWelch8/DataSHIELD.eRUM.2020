@@ -32,7 +32,6 @@ ds.mean <- function(connections = NULL, variable.name = NULL, combined = FALSE)
   no.servers       <- connections$get_no_servers()
   server.names     <- connections$get_server_names()
   outcome          <- list()
-  outcome[["combined"]]
   totals           <- c(rep(0,no.servers))
   no.observations  <- c(rep(0,no.servers))
   for(server in 1:no.servers)
@@ -71,7 +70,8 @@ ds.mean <- function(connections = NULL, variable.name = NULL, combined = FALSE)
     outcome[[server.name]] <- 0.0
     tryCatch({outcome[[server.name]] <- connections$get_server(server.name)$server.mean(variable.name)},
               error = function(error){return(0.0)})
-    if(outcome[[server.name]] == 0.0)
+    
+    if(outcome[[server.name]]==0.0)
     {
       outcome[[server.name]] <- "server warming: disclosive call"
     }

@@ -37,7 +37,6 @@ ds.factor <- function(connections, variable.name, combined = FALSE)
     else
     {
       all.factors   <- c(all.factors, outcome[[server.name]])
-      print(all.factors)
     }
   }
   

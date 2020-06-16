@@ -40,8 +40,10 @@ connections$upload("Edinburgh",path.to.data,meta.data,"classic")
 
 print("----  retrieve some of the data from the servers and display them -----")
 print(connections$servers[["Newcastle"]]$datasets[["classic"]]$data)
-print(connections$servers[["London"]]$datasets[["classic"]]$data[,c("Author","Title","Words")])
-print(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,c("Author","Title","Words")])
+filter <- c("Author","Title","Words")
+print(connections$servers[["London"]]$datasets[["classic"]]$data[,filter])
+filter <- c("Author","Title","Words")
+print(connections$servers[["Edinburgh"]]$datasets[["classic"]]$data[,filter])
 
 print("--------------- Less disclosive examples ----------------")
 print("-------------- Start servers  and connect to servers -------------------")

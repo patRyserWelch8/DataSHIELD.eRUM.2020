@@ -1,4 +1,4 @@
-#accessed data from https://data.europa.eu/euodp/en/data/dataset/covid-19-coronavirus-data/resource/55e8f966-d5c8-438e-85bc-c7a5a26f4863
+# data accessed from https://data.europa.eu/euodp/en/data/dataset/covid-19-coronavirus-data/resource/55e8f966-d5c8-438e-85bc-c7a5a26f4863
 # on Monday 08/06/20
 
 ###this code, and its #comments, are designed to be run line by line, as an investigation, not in large chunks.
@@ -13,7 +13,7 @@ library(DSI)
 library(DSOpal)
 library(dsBaseClient)
 
-#login
+########################### Log in to DataSHIELD servers ########################### 
 builder <- DSI::newDSLoginBuilder()
 
 builder$append(server = "africa",  url = "http://192.168.56.100:8080/",
@@ -35,11 +35,11 @@ builder$append(server = "oceania", url = "http://192.168.56.100:8080/",
 logindata <- builder$build()
 
 connections <- DSI::datashield.login(logins = logindata, assign = TRUE, symbol = "D")
-#############finished logging in ##################
+########################### finished logging in ########################### 
 
 
 
-################how big is our dataset?
+########################### how big is our dataset? ########################### 
 ds.dim(x = 'D')
 #what types of data can we investigate?
 ds.colnames(x='D')
@@ -55,65 +55,82 @@ ds.class(x='D$countryterritoryCode')
 ds.class(x='D$popData2018')
 ds.class(x='D$continentExp')
 
-############################################## How to portray the cases data over time?
+###########################  How to portray the cases data over time? ########################### 
 ?ds.scatterPlot()
 #scatter plot for cases over the entire dataset: 
 ds.scatterPlot("D$day","D$cases")
 
-  # Doesn't work well; overlaying; no differentiation between nodes.
-# can we isolate data for just one day?
-#first isolate month
-ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "4", Boolean.operator = "==", newobj = "April.subset", datasources = connections)
-#then isolate a random day
-ds.dataFrameSubset(df.name="April.subset", V1.name = "April.subset$day", V2.name = "30", Boolean.operator = "==", newobj = "April30th", datasources = connections)
 # how to cause disclosure error? Can't isolate a country as they don't occur on all servers
 
 #find out what levels "month" is made of:
 ds.levels(x="D$month")
+# doesn't work, ds.levels only works on factors and "month" has not been set up as a factor.
+# at this stage, could contact the data custodian for what levels months has, or could ask them
+# to reset it as a factor (using the data dictionary "categories" page)
+
+
 # So, split into month by month, then plot cases against day of month. 
-ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "1", Boolean.operator = "==", newobj = "January.subset", datasources = connections)
-ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "2", Boolean.operator = "==", newobj = "February.subset", datasources = connections)
-ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "3", Boolean.operator = "==", newobj = "March.subset", datasources = connections)
-ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "4", Boolean.operator = "==", newobj = "April.subset", datasources = connections)
-ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "5", Boolean.operator = "==", newobj = "May.subset", datasources = connections)
-ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "6", Boolean.operator = "==", newobj = "June.subset", datasources = connections)
+ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "1", 
+                   Boolean.operator = "==", newobj = "January.subset", datasources = connections)
+ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "2", 
+                   Boolean.operator = "==", newobj = "February.subset", datasources = connections)
+ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "3", 
+                   Boolean.operator = "==", newobj = "March.subset", datasources = connections)
+ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "4", 
+                   Boolean.operator = "==", newobj = "April.subset", datasources = connections)
+ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "5", 
+                   Boolean.operator = "==", newobj = "May.subset", datasources = connections)
+ds.dataFrameSubset(df.name="D", V1.name = "D$month", V2.name = "6", 
+                   Boolean.operator = "==", newobj = "June.subset", datasources = connections)
+
 # Check it has worked by seeing dimensions have changed:
-ds.dim("January.subset")
-ds.dim("February.subset")
-ds.dim("March.subset")
-ds.dim("April.subset")
-ds.dim("May.subset")
-ds.dim("June.subset")
+ds.dim(x="D")
+# compared with:
+ds.dim(x="January.subset", datasources = connections)
+ds.dim(x="February.subset", datasources = connections)
+ds.dim(x="March.subset", datasources = connections)
+ds.dim(x="April.subset", datasources = connections)
+ds.dim(x="May.subset", datasources = connections)
+ds.dim(x= "June.subset", datasources = connections)
 
 
 
-#################################################### Creating the Scatter Plots
+########################### Creating the Scatter Plots ########################### 
 #scatter plots of cases over time, per month
 
-ds.scatterPlot("January.subset$day","January.subset$cases") #creates datashield.errors, so run them:
+ds.scatterPlot("January.subset$day","January.subset$cases") #creates datashield.errors, so
+    # you can run them:
 datashield.errors()                           ## disclosive 
-ds.scatterPlot("February.subset$day","February.subset$cases") ## successfully plots (as do all below)
-ds.scatterPlot("March.subset$day","March.subset$cases")             ## note the very different y scales
+ds.scatterPlot("February.subset$day","February.subset$cases") ## successfully plots
+    # (as do all below)
+ds.scatterPlot("March.subset$day","March.subset$cases") # note the very disparate y scales
 ds.scatterPlot("April.subset$day","April.subset$cases")
 ds.scatterPlot("May.subset$day","May.subset$cases")
 ds.scatterPlot("June.subset$day","June.subset$cases")
 
 
-ds.colnames(x="January.subset") # to remind what the column name is for deaths: it's just "deaths"! (no change from server-side object x="D")
+ds.colnames(x="January.subset") # to remind ourselves what the column name is for deaths:
+                                # it's just "deaths"! (no change from server-side object x="D")
 
 # Scatter plots of deaths over time
 ds.scatterPlot("January.subset$day","January.subset$deaths") ## disclosive
-ds.scatterPlot("February.subset$day","February.subset$deaths") ## disclosive # doesn't plot like cases in February did, as fewer datapoints for people dying in the relatively early month of February
+ds.scatterPlot("February.subset$day","February.subset$deaths") ## disclosive # doesn't plot
+    # like cases in February did, as fewer datapoints for people dying in the relatively
+    #early month of February
 ds.scatterPlot("March.subset$day","March.subset$deaths")    ## successfully plots!   
-ds.scatterPlot("April.subset$day","April.subset$deaths")   ## again note the very different y scales
+ds.scatterPlot("April.subset$day","April.subset$deaths")   
 ds.scatterPlot("May.subset$day","May.subset$deaths")
 ds.scatterPlot("June.subset$day","June.subset$deaths")    #error, so investigate...
 datashield.errors()          #disclosive
-ds.scatterPlot("June$day", "June$deaths", method="probabilistic")  ### uses different method to plot, however now some numbers are sub-zero!
+ds.scatterPlot("June$day", "June$deaths", method="probabilistic")  ### uses different method
+    # to plot, however now some numbers are sub-zero!
 
 
+########################### Conducting an Analysis ########################### 
+# Is it fair to compare a large continent like Asia with a small continent like Oceania?
+    # Are we giving countries like New Zealand too much praise?
 
-# Is it fair to compare a large continent like Asia with a small continent like Oceania? Are we giving countries like New Zealand too much praise?
+########################### Scaling for population size ########################### 
 # Firstly, scale for the average size of the country in the continent, the
 ds.colnames(x="D")
 # "popData2018" column.
@@ -121,44 +138,42 @@ ds.colnames(x="D")
 ds.quantileMean("D$popData2018", type = "split")
 # in the order of hundreds of millions for asia.
 # So we can present case numbers in terms of cases per million population of each country:
-# can apply this using ds.make()
-#ds.make() is an assign type function. It creates an object that gets stored on the server-side. We cannot directly view it. But we can do some functions on it that investigate its properties, and we can use it for other things like plotting.
+# We can apply this using ds.make()
+#ds.make() is an assign type function. It creates an object that gets stored on the server-side.
+# We cannot directly view it. But we can do some functions on it that investigate its properties,
+# and we can use it for other things like plotting.
 ?ds.make()                      # to view the help, which arguments to use for what.
-ds.make(toAssign = "(1*10^6)*D$cases/D$popData2018", newobj = "Population_scaled_cases", datasources = connections)
+ds.make(toAssign = "(1*10^6)*D$cases/D$popData2018", newobj = "Population_scaled_cases",
+        datasources = connections)
 # this is an assign function so it was created on the server side.
-ds.scatterPlot("D$day", "Population_scaled_cases")             # we're not separating the months, instead seeing the worst cases across all months stand out.
+ds.scatterPlot("D$day", "Population_scaled_cases")            
+# we're not separating the months, instead seeing the worst cases across all months stand out.
 ds.mean(x="Population_scaled_cases")
-# what we can see is that europe comes in "worst", with cases in the order of x10^3 for some case numbers in some countries.
+# what we can see is that europe comes in "worst", with cases in the order of x10^3 for some
+    # case numbers in some countries.
 # Asia, Africa, and America are all around the x10^2 magnitude
 # Oceania is still doing the best with none being greater than x10^1 magnitude.
 
 
-
-# This plot is still not the best it could be. The spread of possible case numbers is clearly not normally distributed,
-# it is highly clustered towards the zero lower bound end and very dispersed at the upper end of case numbers.
-# It could be replotted with a logged y axis.
-?ds.log()
-ds.make(toAssign = "log(Population_scaled_cases)", newobj = "Population_log_scaled_cases_dsmake", datasources = connections)
-ds.scatterPlot("D$day", "Population_log_scaled_cases_dsmake")
-# errors??
-ds.mean(x="Population_log_scaled_cases_dsmake")
-#alternative method using function "ds.log":
-ds.log(x="Population_scaled_cases", newobj = "Population_log_scaled_cases", datasources = connections)
-ds.scatterPlot("D$day", "Population_log_scaled_cases")
-datashield.errors() # errors??
-ds.mean(x="Population_log_scaled_cases",datasources = connections)
-# still errors... for now. Wait for Paul's comments.
-
-
-
+########################### Mean and Variance ########################### 
 # The final step is to compare the continents in terms of central tendency and spread. 
-# We will do this using the assumption that non-normally distributed data can be sqrt-transformed to become normally distributed.
-# if log isn't working, above, use square root transformation method:
+
+# This plot is still not the best it could be. The spread of possible case numbers is clearly 
+    # not evenly distributed, it is highly clustered towards the zero lower bound end and very 
+    # dispersed at the upper end of case numbers.
+
+# It would be statistically incorrect to investigate the distribution of case numbers under the
+    # assumption that they were normally distributed
+
+
+# We will do this using the assumption that non-normally distributed data can be sqrt-transformed
+    # to become normally distributed.
 ds.mean(x="Population_scaled_cases", datasources= connections)
-ds.make(toAssign = "(Population_scaled_cases)^0.5", newobj = "Population_sqrt_scaled_cases", datasources = connections)
+ds.make(toAssign = "(Population_scaled_cases)^0.5", newobj = "Population_sqrt_scaled_cases",
+        datasources = connections)
 #check it has created values in sensible range...
 ds.mean(x="Population_sqrt_scaled_cases", datasources= connections)
-ds.scatterPlot("D$day", "Population_sqrt_scaled_cases") # IT FLIPPIN WORKS!
+ds.scatterPlot("D$day", "Population_sqrt_scaled_cases")
 ### notice the clustering has changed a lot
 
 
@@ -202,40 +217,32 @@ polygon(x=c(-10,0,0,-10),y=c(-2,-2,0.3,0.3),col= my_colors)
 # b) the underlying dataset is not normally distributed. This is the more likely one.
 
 
+########################### REMEMBER TO LOGOUT!
+DSI::datashield.logout(connections)
+
+########################### Other things you could take to the analysis:
+
+# Keep going and find the mean and standard deviation for all 5 of the continents.
+
+# "Beautify" the scatter plots: something not yet introduced in datashield, but is being
+    # considered to implement it in the future. With this, we could colour plotted points
+    # according to country to visually draw out any particularly high ones.
+
+# We could do population scaling/ logging/ fitting to a distribution on a per-month basis,
+    # to observe the change in central tendency and spread over time between continents.
+
+# We could attempt to plot a line of best fit on a logged graph, which would proves that
+    # cases were rising exponentially in real terms...
+
+# We could attempt to subset individual countries to see how they compared to the rest of their
+    # continent
+
+# We could create a scatterplot of deaths/cases ratio against time, to see if it's particularly
+    # high in any continent (with possible inferences about worse outcomes for people catching
+    # it where this statistic is higher). Again could be split into month-by-month plots.
 
 
-
-
-#### here: should we tabulate mean and sd for all the other continents? probably not if the underlying data is not the right distribution..
-#some prior work:
-# compare mean and sd by tabulating in R
-ds.mean(x="Population_sqrt_scaled_cases", datasources= connections)
-ds.var(x="Population_sqrt_scaled_cases", datasources= connections)
-continent_comparisons<- #matrix... see hint below
-# https://www.cyclismo.org/tutorial/R/tables.html
-#smoke <- matrix(c(51,43,22,92,28,21,68,22,9),ncol=3,byrow=TRUE)
-#> colnames(smoke) <- c("High","Low","Middle")
-#> rownames(smoke) <- c("current","former","never")
-#> smoke <- as.table(smoke)
-#> smoke
-#High Low Middle
-#current   51  43     22
-#former    92  28     21
-#never     68  22      9
-
-
-
-#### Where we could go from here: other things you could take to the analysis:
-
-# keep going and find the mean and standard deviation for all 5 of the continents.
-# "prettify" the scatter plots: something not yet introduced in datashield, but is being considered to implement it in the future. With this, we could colour plotted points according to country to visually draw out any particularly high ones.
-# could do population scaling/ logging/ fitting to a distribution on a per-month basis, to observe the change in central tendency and spread over time between continents.
-# could attempt to plot a line of best fit on a logged graph, which would proves that cases were rising exponentially in real terms...
-# could attempt to subset individual countries to see how they compared to the rest of their continent
-# could create a scatterplot of deaths/cases ratio against time, to see if it's particularly high in any continent (with possible inferences about worse outcomes for people catching it where this statistic is higher). Again could be split into month-by-month plots.
-
-
-##### 
+########################### Unfinished investigations: ########################### 
 # attempt to makescatterplot of deaths/cases ratio against time
 
 ds.assign(toAssign='casesJanuary$deaths/casesJanuary$cases' ,newobj='death_to_case_ratio_January')
@@ -245,7 +252,6 @@ ds.assign(toAssign='casesApril$deaths/casesApril$cases' ,newobj='death_to_case_r
 ds.assign(toAssign='casesMay$deaths/casesMay$cases' ,newobj='death_to_case_ratio_May')
 ds.assign(toAssign='casesJune$deaths/casesJune$cases' ,newobj='death_to_case_ratio_June')
 
-#scatter plots of ratio deaths to cases over time
 ds.scatterPlot("casesJanuary$day","death_to_case_ratio_January") ## doesn't plot (read errors)
 ds.scatterPlot("casesFebruary$day","death_to_case_ratio_February") ## ERRORS
 ds.scatterPlot("casesMarch$day","death_to_case_ratio_March")         ## ERRORS. may have done something wrong.
@@ -253,15 +259,41 @@ ds.scatterPlot("casesApril$day","death_to_case_ratio_April")
 ds.scatterPlot("casesMay$day","death_to_case_ratio_May")
 ds.scatterPlot("casesJune$day","death_to_case_ratio_June")
 
+# Trying to replot with logging the case numbers instead of square rooting?
+?ds.log()
+ds.make(toAssign = "log(Population_scaled_cases)", newobj = "Population_log_scaled_cases_dsmake",
+        datasources = connections)
+ds.scatterPlot("D$day", "Population_log_scaled_cases_dsmake")
+# errors??
+ds.mean(x="Population_log_scaled_cases_dsmake")
+#alternative method using function "ds.log":
+ds.log(x="Population_scaled_cases", newobj = "Population_log_scaled_cases", datasources = connections)
+ds.scatterPlot("D$day", "Population_log_scaled_cases")
+datashield.errors() # errors??
+ds.mean(x="Population_log_scaled_cases",datasources = connections)
+# Error caused by trying to calculate many logs of 0 (N.B. log(0)= -Inf. The mean is massively
+# affected by this.
 
-
+#### If the distribution had been valid: trying to create table to compare means and standard
+# between continents
+# compare mean and sd by tabulating in R
+ds.mean(x="Population_sqrt_scaled_cases", datasources= connections)
+ds.var(x="Population_sqrt_scaled_cases", datasources= connections)
+continent_comparisons<- #matrix... see hint below
+  # https://www.cyclismo.org/tutorial/R/tables.html
+  #smoke <- matrix(c(51,43,22,92,28,21,68,22,9),ncol=3,byrow=TRUE)
+  #> colnames(smoke) <- c("High","Low","Middle")
+  #> rownames(smoke) <- c("current","former","never")
+  #> smoke <- as.table(smoke)
+  #> smoke
+  #High Low Middle
+  #current   51  43     22
+  #former    92  28     21
+  #never     68  22      9
 ###what else to do: tabulate data?
 # can't see any factor variables that would work well...
 
-
-
-##### 
-# attempt to isolate single country
+#####  attempting to isolate single country
 
 #We are interested in the number of cases. What are some summary statistics about that?
 #statistical mean alone:
@@ -300,5 +332,3 @@ ds.assign(toAssign='D$countriesAndTerritories==United_States_of_America', newobj
 
 
 
-### REMEMBER TO LOGOUT!
-DSI::datashield.logout(connections)
